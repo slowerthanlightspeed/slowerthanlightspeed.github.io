@@ -106,7 +106,7 @@ function shallowClonePrimitives(oldObject){ // needs fallback && singletonish
 var initTimer = 0; 
 var theReplacements = [
 	[ "letter", ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"] ],
-	[ "number", [0,1,2,3,4,5,6,7,8,9] ],
+	[ "number", [0,1,2,3,4,5,6,7,8,9] ]/*,
 	[ "pic", [
 		"<img class='choiceButton' src='circle.jpg' alt='circle'>", 
 		"<img class='choiceButton' src='square.jpg' alt='square'>", 
@@ -115,7 +115,7 @@ var theReplacements = [
 		"<img class='choiceButton' src='diamond.jpg' alt='diamond'>", 
 		"<img class='choiceButton' src='gear.jpg' alt='gear'>"
 		]
-	]
+	]*/
 ];
 var replacementType = "";
 function makeButtons(){ // updates current puzzle at the same time
