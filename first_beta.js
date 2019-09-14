@@ -132,7 +132,7 @@ function makeButtons(){ // updates current puzzle at the same time
 	for(var i=0; i<6; i++){
 		theseReplacements.push( (whichReplacements.splice( Math.floor(Math.random() * whichReplacements.length), 1 ))[0]);
 	}
-	console.log(theseReplacements);
+	// console.log(theseReplacements);
 	// MAKE A COPY OF A RANDOMLY CHOSEN PUZZLE
 	var randomPuzzlePosition = Math.floor( Math.random()*availablePuzzles.length );
 	currentPuzzle = JSON.parse(JSON.stringify(availablePuzzles[randomPuzzlePosition]));
