@@ -595,8 +595,8 @@ function checkAnswer(){
 		var correctAnswer = preOrderComparisons2([ currentPuzzle[0], currentPuzzle[1] ])[0];
 	}
 	if(!correctAnswer){alert("something is amiss, my apologies.");}
-	console.log("correctAnswer");
-	console.log(correctAnswer);
+	// console.log("correctAnswer");
+	// console.log(correctAnswer);
 	var replacementTypeBools = {
 		number: function(j){return textInputs[j].value*1 !== correctAnswer[j]*1;},
 		letter: function(j){return textInputs[j].value.toUpperCase() !== correctAnswer[j];},
