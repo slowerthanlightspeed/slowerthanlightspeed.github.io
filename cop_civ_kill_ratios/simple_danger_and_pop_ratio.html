@@ -46,6 +46,7 @@ table {
 </head>
 <body style="text-align:center;">
 <div style="width:400px; margin-left:auto; margin-right:auto;">
+<h1>A:B Ratios in the Danger Zone</h1>
 <h2>Pick ratio of players per team</h2>
 <table>
 	<tr>
@@ -242,8 +243,8 @@ function runInteraction(){
 		bs_k_by_as++;
 	}
 	
-	a_k_percent			= Math.round(as_k_by_bs / a_player_count*1000)/10 + "%";
-	b_k_percent			= Math.round(bs_k_by_as / b_player_count*1000)/10 + "%";
+	a_k_percent			= Math.round(as_k_by_bs / a_player_count*10000)/100 + "%";
+	b_k_percent			= Math.round(bs_k_by_as / b_player_count*10000)/100 + "%";
 	
 	bs_seen_a_killed	= Math.round(interaction_count / as_k_by_bs * 100)/100;
 	as_seen_b_killed	= Math.round(interaction_count / bs_k_by_as * 100)/100;
