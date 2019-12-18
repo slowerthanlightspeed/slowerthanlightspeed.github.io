@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+.a, 
+.b {
+	position:absolute; 
+	border:1px solid; 
+	height:20px; width:20px;
+}
+.a {
+	background-color:#cf7621;
+	left:100px;
+	top:100px;
+}
+.b {
+	background-color:#1100aa;
+}
+
+table {
+	width:500px; 
+	text-align:center;
+}
+
+#arena {
+	width:100%;
+	height:200px;
+	position:relative;
+}
+#a_team_fighters, 
+#b_team_fighters {
+	position:absolute;
+	height:200px;
+	width:200px;
+}
+#a_team_fighters {
+	left:25px;
+}
+#b_team_fighters {
+	left:275px;
+}
+</style>
+</head>
+<body style="text-align:center;">
+<div style="margin-left:auto; margin-right:auto; width:500px;">
+<h1>One on one in the Danger Zone</h1>
+<h2>Pick your teams</h2>
+<table>
+	<tr>
+		<th>Team A</th>
+		<th>Team B</th>
+	</tr>
+	<tr>
+		<td>
+			<select id="team_a_type" onchange="updateAimage();">
+				<option>Elephant (900 Danger)</option>
+				<option>Hippo (800 Danger)</option>
+				<option>Bear (700 Danger)</option>
+				<option>Tiger (600 Danger)</option>
+				<option>Lion (500 Danger)</option>
+				<option>Alligator (400 Danger)</option>
+				<option>Moose (300 Danger)</option>
+				<option>Wolf (200 Danger)</option>
+				<option>Mastiff (100 Danger)</option>
+				<option>Hyena (50 Danger)</option>
+			</select>
+		</td>
+		<td>
+			<select id="team_b_type" onchange="updateBimage();">
+				<option>Elephant (900 Danger)</option>
+				<option>Hippo (800 Danger)</option>
+				<option>Bear (700 Danger)</option>
+				<option>Tiger (600 Danger)</option>
+				<option>Lion (500 Danger)</option>
+				<option>Alligator (400 Danger)</option>
+				<option>Moose (300 Danger)</option>
+				<option>Wolf (200 Danger)</option>
+				<option>Mastiff (100 Danger)</option>
+				<option>Hyena (50 Danger)</option>
+			</select>
+		</td>
+	</tr>
+</table>
+
+
+
+<h2>Pick ratio of players per team</h2>
+<table>
+	<tr>
+		<th>Team A</th>
+		<th>Team B</th>
+	</tr>
+	<tr>
+		<td>
+			<select id="a_player_count" onchange="updateAcount();">
+				<option selected>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+				<option>6</option>
+				<option>7</option>
+				<option>8</option>
+				<option>9</option>
+				<option>50</option>
+				<option>100</option>
+				<option>200</option>
+			</select>
+		</td>
+		<td>
+			<select id="b_player_count" onchange="updateBcount();">
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+				<option>6</option>
+				<option>7</option>
+				<option>8</option>
+				<option>9</option>
+				<option>50</option>
+				<option>100</option>
+				<option selected>200</option>
+			</select>
+		</td>
+	</tr>
+</table>
+
+
+
+
+<h2>Make em mingle</h2>
+<button onclick="start_fight();" 	id="start_button" 	style="display:inline-block;">	Start</button>
+<button onclick="resume_fight();" 	id="resume_button" 	style="display:none;">			Resume</button>
+<button onclick="stop_fight();" 	id="stop_button" 	style="display:none;">			Stop</button>
+<button onclick="reset(true);" 		id="reset_button" 	style="display:none;">			Reset</button>
+
+<div id="arena">
+	<img id="a_team_fighters" alt="a_team_fighters" src="animal_images/elephant.png">
+	<img id="b_team_fighters" alt="b_team_fighters" src="animal_images/elephant.png">
+</div>
+
+
+<h2>Outcome</h2>
+
+<p>Total one-on-one interactions: <span id="total_rounds">0</span></p>
+
+<table style="text-align:center;">
+<tr>
+	<th>Participating <span class="a_player_name">Elephant</span>s on team A: </th>
+	<th>Participating <span class="b_player_name">Elephant</span>s on team B: </th>
+</tr>
+<tr>
+	<td><span id="a_participants_el">0</span></td>
+	<td><span id="b_participants_el">0</span></td>
+</tr>
+<tr>
+	<th>Count of Team A <span class="a_player_name">Elephant</span>s: </th>
+	<th>Count of Team B<span class="b_player_name">Elephant</span>s: </th>
+</tr>
+<tr>
+	<td><span id="a_teammates_el">0</span></td>
+	<td><span id="b_teammates_el">0</span></td>
+</tr>
+</table>
+
+<table style="text-align:center;">
+<tr>
+	<th><span class="a_player_name">Elephant</span>s killed on team A: </th>
+	<th><span class="b_player_name">Elephant</span>s killed on team B: </th>
+</tr>
+<tr>
+	<td><span id="a_killed">0</span></td>
+	<td><span id="b_killed">0</span></td>
+</tr>
+<tr>
+	<th style="border-top:1px solid black; border-right:1px solid black; border-left:1px solid black;">Team A <span class="a_player_name">Elephant</span>s Killed as a percentage of Team A's population. </th>
+	<th style="border-top:1px solid black; border-right:1px solid black; border-left:1px solid black;">Team B <span class="b_player_name">Elephant</span>s Killed as a percentage of Team B's population. </th>
+</tr>
+<tr>
+	<td style="border-bottom:1px solid black;"><span id="a_killed_percent">0%</span></td>
+	<td style="border-bottom:1px solid black;"><span id="b_killed_percent">0%</span></td>
+</tr>
+<tr>
+	<th>On average, how many team B <span class="b_player_name">Elephant</span>s did a team A <span class="a_player_name">Elephant</span> have to interact with before a team A <span class="a_player_name">Elephant</span> was killed by a team B <span class="b_player_name">Elephant:</span></th>
+	<th>On average, how many team A <span class="a_player_name">Elephant</span>s did a team B <span class="b_player_name">Elephant</span> have to interact with before a team B <span class="b_player_name">Elephant</span> was killed by a team A <span class="a_player_name">Elephant:</span></th>
+</tr>
+<tr>
+	<td><span id="as_killed_per_b">0</span></td>
+	<td><span id="bs_killed_per_a">0</span></td>
+</tr>
+</table>
+</div>
+</body>
+<script type="text/javascript">
+
+var a_team_type_el 		= document.getElementById("team_a_type"),
+	b_team_type_el 		= document.getElementById("team_b_type"),
+	a_team_ratio_el 	= document.getElementById("a_player_count"),
+	b_team_ratio_el 	= document.getElementById("b_player_count"),
+	a_fighters_el 		= document.getElementById("a_team_fighters"),
+	b_fighters_el	 	= document.getElementById("b_team_fighters"),
+	rounds_el 			= document.getElementById("total_rounds"),
+	as_killed_el 		= document.getElementById("a_killed"),
+	bs_killed_el 		= document.getElementById("b_killed"),
+	as_killed_p_el 		= document.getElementById("a_killed_percent"),
+	bs_killed_p_el 		= document.getElementById("b_killed_percent"),
+	bs_till_a_k_el 		= document.getElementById("as_killed_per_b"),
+	as_till_b_k_el 		= document.getElementById("bs_killed_per_a"),
+	start_button_el		= document.getElementById("start_button"),
+	resume_button_el	= document.getElementById("resume_button"),
+	stop_button_el		= document.getElementById("stop_button"),
+	reset_button_el		= document.getElementById("reset_button"),
+	a_names_el 			= document.getElementsByClassName("a_player_name"),
+	b_names_el 			= document.getElementsByClassName("b_player_name"),
+	a_participants		= 0,
+	b_participants		= 0;
+	
+var a_name = "Elephant",
+	b_name = "Elephant",
+	
+	a_team_ratio = 1,
+	b_team_ratio = 200,
+	
+	rounds_count = 0,
+	
+	a_names_el_count = a_names_el.length,
+	b_names_el_count = b_names_el.length,
+	
+	as_killed = 0,
+	bs_killed = 0,
+	
+	a_percent_killed = 0,
+	b_percent_killed = 0
+	
+	bs_till_a_k = 0,
+	as_till_b_k = 0;
+	
+var dangerLevels = {
+	"a":999,
+	"b":999
+};
+
+var start = null;
+var start2 = null;
+
+var whichDirection = "forward";
+
+var stop = false;
+function step(timestamp) {
+  if (!start) start = timestamp;
+  var progress = timestamp - start;
+  a_fighters_el.style.left = 25 + 25*progress/100 + "px";
+  b_fighters_el.style.left = 275 - 25*progress/100 + "px";
+  
+  if (progress < 100 && whichDirection === "forward") {
+	window.requestAnimationFrame(step);
+  }
+  else if (stop === false){
+	whichDirection = "back";
+	start = null;
+	calculateKill();
+	window.requestAnimationFrame(stepBack);
+  }
+}
+
+function stepBack(timestamp) {
+  if (!start2) start2 = timestamp;
+  var progress = timestamp - start2;
+  a_fighters_el.style.left = 50 - 25*progress/100 + "px";
+  b_fighters_el.style.left = 250 + 25*progress/100 + "px";
+  
+  if (progress < 100 && whichDirection === "back") {
+	window.requestAnimationFrame(stepBack);
+  }
+  else if (stop === false){
+	start2 = null;
+	whichDirection = "forward";
+	window.requestAnimationFrame(step);
+  }
+}
+
+
+function calculateKill(){
+	
+	rounds_count 			+= 1
+	rounds_el.innerHTML 	= rounds_count;
+	
+	if( (Math.floor(Math.random() * 1000) + 1)  <= dangerLevels["b"]){
+		as_killed++;
+		as_killed_el.innerHTML = as_killed;
+	}
+	if( (Math.floor(Math.random() * 1000) + 1)  <= dangerLevels["a"]){
+		bs_killed++;
+		bs_killed_el.innerHTML = bs_killed;
+	}
+	
+	a_teammates_el.innerHTML = rounds_count * a_team_ratio;
+	b_teammates_el.innerHTML = rounds_count * b_team_ratio;
+	
+	a_participants_el.innerHTML = rounds_count;
+	b_participants_el.innerHTML = rounds_count;
+	
+	a_percent_killed = as_killed / (rounds_count * a_team_ratio) * 100;
+	b_percent_killed = bs_killed / (rounds_count * b_team_ratio) * 100;
+	
+	a_percent_killed = Math.round(a_percent_killed*1000)/1000;
+	b_percent_killed = Math.round(b_percent_killed*1000)/1000;
+	
+	as_killed_p_el.innerHTML = a_percent_killed + "%";
+	bs_killed_p_el.innerHTML = b_percent_killed + "%";
+	
+	
+	bs_till_a_k = rounds_count / as_killed; // (rounds_count * b_team_ratio * a_team_ratio)
+	as_till_b_k = rounds_count / bs_killed; // (rounds_count * b_team_ratio * a_team_ratio)
+	
+	bs_till_a_k = Math.round(bs_till_a_k*1000)/1000;
+	as_till_b_k = Math.round(as_till_b_k*1000)/1000;
+	
+	bs_till_a_k_el.innerHTML = bs_till_a_k;
+	as_till_b_k_el.innerHTML = as_till_b_k;
+	
+}
+
+
+function start_fight(){
+	
+	reset();
+	
+	a_fighters_el.style.left = "25px";
+	b_fighters_el.style.left = "275px";
+	
+	stop 	= false;
+	start 	= null;
+	start2 	= null;
+	
+	whichDirection = 'forward'; 
+	
+	start_button_el.style.display="none";
+	
+	stop_button.style.display = "inline-block";
+	
+	resume_button.style.display = "none";
+	
+	reset_button.style.display = "none";
+	
+	window.requestAnimationFrame(step);
+}
+
+function stop_fight(){
+	
+	stop=true;
+	
+	stop_button.style.display = "none";
+	
+	resume_button_el.style.display="inline-block";
+	
+	reset_button.style.display = "inline-block";
+}
+
+function resume_fight(){
+	a_fighters_el.style.left = "25px";
+	b_fighters_el.style.left = "275px";
+	
+	stop 	= false;
+	start 	= null;
+	start2 	= null;
+	
+	whichDirection = 'forward'; 
+	
+	resume_button.style.display = "none";
+	
+	stop_button.style.display = "inline-block";
+	
+	reset_button.style.display = "none";
+	
+	window.requestAnimationFrame(step);
+}
+
+function reset(is_direct){
+	
+	stop_fight();
+	
+	rounds_count 	= 0;
+	
+	as_killed = 0;
+	as_killed_el.innerHTML = 0;
+	bs_killed = 0;
+	bs_killed_el.innerHTML = 0;
+	
+	a_percent_killed = 0;
+	b_percent_killed = 0;
+	
+	as_killed_p_el.innerHTML = a_percent_killed + "%";
+	bs_killed_p_el.innerHTML = b_percent_killed + "%";
+	
+	bs_till_a_k = "Infinity";
+	as_till_b_k = "Infinity";
+	
+	bs_till_a_k_el.innerHTML = bs_till_a_k;
+	as_till_b_k_el.innerHTML = as_till_b_k;
+	
+	rounds_el.innerHTML 	= rounds_count;
+	
+	a_fighters_el.style.left = "25px";
+	b_fighters_el.style.left = "275px";
+	
+	stop 	= false;
+	start 	= null;
+	start2 	= null;
+	
+	whichDirection = 'forward'; 
+	
+	if(is_direct){
+		updateAimage();
+		updateBimage();
+		updateAcount();
+		updateBcount();
+	}
+	
+	start_button_el.style.display="inline-block";
+	
+	resume_button_el.style.display="none";
+	
+	reset_button.style.display = "none";
+}
+
+function updateAimage(){
+	
+	var whichDescription = team_a_type.options[team_a_type.selectedIndex].text;
+	
+	var whichAnimal = whichDescription.split(" ")[0];
+	var whichPower  = whichDescription.split("(")[1].split(" ")[0]*1;
+	
+	a_name 				= whichAnimal.toLowerCase();
+	dangerLevels["a"] 	= whichPower;
+	
+	a_fighters_el.src = "animal_images/" + a_name + ".png";
+	
+	var i = 0;
+	for(; i < a_names_el_count; i++){
+		a_names_el[i].innerHTML = whichAnimal;
+	}
+	
+	stop_fight();
+	
+	start_button_el.style.display="inline-block";
+	
+	resume_button_el.style.display="none";
+	
+	reset_button.style.display = "none";
+}
+
+function updateBimage(){
+	
+	var whichDescription = team_b_type.options[team_b_type.selectedIndex].text;
+	
+	var whichAnimal = whichDescription.split(" ")[0];
+	var whichPower  = whichDescription.split("(")[1].split(" ")[0]*1;
+	
+	b_name 				= whichAnimal.toLowerCase();
+	dangerLevels["b"] 	= whichPower;
+
+	b_fighters_el.src = "animal_images/" + b_name + ".png";
+	
+	var i = 0; 
+	for(; i < b_names_el_count; i++){
+		b_names_el[i].innerHTML = whichAnimal;
+	}
+	
+	stop_fight();
+	
+	start_button_el.style.display="inline-block";
+	
+	resume_button_el.style.display="none";
+	
+	reset_button.style.display = "none";
+}
+
+function updateAcount(){
+	
+	a_team_ratio = a_player_count.options[a_player_count.selectedIndex].text;
+	
+	stop_fight();
+	
+	start_button_el.style.display="inline-block";
+	
+	resume_button_el.style.display="none";
+	
+	reset_button.style.display = "none";
+}
+
+function updateBcount(){
+	
+	b_team_ratio = b_player_count.options[b_player_count.selectedIndex].text;
+	
+	stop_fight();
+	
+	start_button_el.style.display="inline-block";
+	
+	resume_button_el.style.display="none";
+	
+	reset_button.style.display = "none";
+}
+
+</script>
+</html>
