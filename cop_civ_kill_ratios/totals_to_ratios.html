@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='UTF-8'>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+.a, 
+.b {
+	position:absolute; 
+	border:1px solid; 
+	height:20px; width:20px;
+}
+.a {
+	background-color:#cf7621;
+	left:100px;
+	top:100px;
+}
+.b {
+	background-color:#1100aa;
+}
+
+table {
+	width:400px; 
+	text-align:center;
+}
+
+#arena {
+	width:100%;
+	height:200px;
+	position:relative;
+}
+#a_team_interactionsers, 
+#b_team_interactionsers {
+	position:absolute;
+	height:200px;
+	width:200px;
+}
+#a_team_interactionsers {
+	left:25px;
+}
+#b_team_interactionsers {
+	left:275px;
+}
+</style>
+</head>
+<body style="text-align:center;">
+<div style="width:400px; margin-left:auto; margin-right:auto;">
+<h1>Totals into Ratios in the Danger Zone</h1>
+
+<table>
+	<tr>
+		<th>Civilian (sub)population</th>
+		<th>Cop population</th>
+	</tr>
+	<tr>
+		<td><input id="civ_pop"></td>
+		<td><input id="cop_pop"></td>
+	</tr>
+</table>
+
+<table>
+	<tr>
+		<th>Civilians killed by cops</th>
+		<th>Cop killed by civilians</th>
+	</tr>
+	<tr>
+		<td><input id="civ_killed"></td>
+		<td><input id="cop_killed"></td>
+	</tr>
+</table>
+
+<button onclick="calculateRatioFromTotals();">Calculate it!</button>
+
+<p>Danger ratio, cop to civilian:<br><span id="civ_to_cop_danger"></span></p>
+<hr>
+<p>Cops with whom a civilian would need to interact before being killed by a cop:<br><span id="cop_count_to_kill_civ"></span></p>
+<hr>
+<p>Civilians with whom a cop would need to interact before being killed by a civilian:<br><span id="civ_count_to_kill_cop"></span></p>
+<br><br>
+<hr><hr><hr>
+<br><br>
+<p>? Don't believe it...</p>
+<p>... try it the other way around!</p>
+<p><a href="https://slowerthanlightspeed.github.io/cop_civ_kill_ratios/danger_animals_one_on_one.html" target="_blank">One-on-One Danger Animals!</a></p>
+<p><a href="https://slowerthanlightspeed.github.io/cop_civ_kill_ratios/simple_danger_and_pop_ratio.html" target="_blank">Simple Danger Ratio.</a></p>
+<br><hr><br>
+<p>OR... just think it through!</p>
+<p>What would possibly make an average cop more dangerous than an average civilian?</p>
+<ul>
+	<li>Cops are strapped whenever on duty! (side-pistol, tazer, shotgun, ...); civilians <a href="https://www.dailysignal.com/2018/03/06/fact-check-what-percentage-of-americans-have-concealed-carry-permits/" target="_blank">rarely carry</a>.</li>
+	<li>Cops know that they can shoot civilians and <a href="https://fivethirtyeight.com/features/ferguson-michael-brown-indictment-darren-wilson/" target="_blank">get away with</a> it most of the time; civilians know that, if they shot a cop, they will almost certainly go to jail (and have a bad time there... if they even live to see the jail!).</li>
+	<li>The <a href="https://www.prisonexp.org/" target="_blank">Stanford Prison Experiment</a></li>
+	<li>Cops have back-up helicopters, swat units, k-9 units, and a central hub for coordinating their efforts.</li>
+</ul>
+
+</div>
+<script type="text/javascript">
+
+
+function calculateRatioFromTotals(){
+	
+	dangerRatio = (civ_killed.value*1/cop_pop.value*1) / (cop_killed.value*1/civ_pop.value*1);
+	
+	civ_to_cop_danger.innerHTML = "<strong>" + Math.round(dangerRatio).toLocaleString() + ":1</strong>";
+	
+	cop_count_to_kill_civ.innerHTML = "<strong>" + Math.round(cop_pop.value*1/civ_killed.value*1).toLocaleString() + "</strong>";
+	
+	civ_count_to_kill_cop.innerHTML = "<strong>" + Math.round(civ_pop.value*1/cop_killed.value*1).toLocaleString() + "</strong>";
+}
+
+</script>
+</body>
+</html>
