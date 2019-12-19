@@ -57,7 +57,7 @@ table {
 		<td>
 			<select id="team_a_type" onchange="updateAimage();">
 				<option>Elephant (900 Danger)</option>
-				<option>Hippo (800 Danger)</option>
+				<option selected>Hippo (800 Danger)</option>
 				<option>Bear (700 Danger)</option>
 				<option>Tiger (600 Danger)</option>
 				<option>Lion (500 Danger)</option>
@@ -73,7 +73,7 @@ table {
 				<option>Elephant (900 Danger)</option>
 				<option>Hippo (800 Danger)</option>
 				<option>Bear (700 Danger)</option>
-				<option>Tiger (600 Danger)</option>
+				<option selected>Tiger (600 Danger)</option>
 				<option>Lion (500 Danger)</option>
 				<option>Alligator (400 Danger)</option>
 				<option>Moose (300 Danger)</option>
@@ -120,10 +120,10 @@ table {
 				<option>6</option>
 				<option>7</option>
 				<option>8</option>
-				<option>9</option>
+				<option selected>9</option>
 				<option>50</option>
 				<option>100</option>
-				<option selected>200</option>
+				<option>200</option>
 			</select>
 		</td>
 	</tr>
@@ -214,11 +214,11 @@ var a_team_type_el 		= document.getElementById("team_a_type"),
 	a_participants		= 0,
 	b_participants		= 0;
 	
-var a_name = "Elephant",
-	b_name = "Elephant",
+var a_name = "Hippo",
+	b_name = "Tiger",
 	
 	a_team_count = 1,
-	b_team_count = 200,
+	b_team_count = 9,
 	
 	rounds_count = 0,
 	
