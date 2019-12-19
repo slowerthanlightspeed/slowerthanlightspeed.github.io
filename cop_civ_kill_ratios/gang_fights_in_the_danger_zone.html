@@ -151,8 +151,8 @@ table {
 
 <table style="text-align:center;">
 <tr>
-	<th>Participating <span class="a_player_name">Elephant</span>s on team A: </th>
-	<th>Participating <span class="b_player_name">Elephant</span>s on team B: </th>
+	<th>Participating <span class="a_player_name">Hippo</span>s on team A: </th>
+	<th>Participating <span class="b_player_name">Tiger</span>s on team B: </th>
 </tr>
 <tr>
 	<td><span id="a_participants_el">0</span></td>
@@ -164,24 +164,24 @@ table {
 
 <table style="text-align:center;">
 <tr>
-	<th><span class="a_player_name">Elephant</span>s killed on team A: </th>
-	<th><span class="b_player_name">Elephant</span>s killed on team B: </th>
+	<th><span class="a_player_name">Hippo</span>s killed on team A: </th>
+	<th><span class="b_player_name">Tiger</span>s killed on team B: </th>
 </tr>
 <tr>
 	<td><span id="a_killed">0</span></td>
 	<td><span id="b_killed">0</span></td>
 </tr>
 <tr>
-	<th style="border-top:1px solid black; border-right:1px solid black; border-left:1px solid black;">Percentage of participating team A <span class="a_player_name">Elephant</span>s Killed: </th>
-	<th style="border-top:1px solid black; border-right:1px solid black; border-left:1px solid black;">Percentage of participating team B <span class="b_player_name">Elephant</span>s Killed: </th>
+	<th style="border-top:1px solid black; border-right:1px solid black; border-left:1px solid black;">Percentage of participating team A <span class="a_player_name">Hippo</span>s Killed: </th>
+	<th style="border-top:1px solid black; border-right:1px solid black; border-left:1px solid black;">Percentage of participating team B <span class="b_player_name">Tiger</span>s Killed: </th>
 </tr>
 <tr>
 	<td style="border-bottom:1px solid black;"><span id="a_killed_percent">0%</span></td>
 	<td style="border-bottom:1px solid black;"><span id="b_killed_percent">0%</span></td>
 </tr>
 <tr>
-	<th>On average, how many gang fights did a team A <span class="a_player_name">Elephant</span> have to participate in before a team A <span class="a_player_name">Elephant</span> was killed by a team B <span class="b_player_name">Elephant:</span></th>
-	<th>On average, how many gang fights did a team B <span class="a_player_name">Elephant</span> have to participate in before a team B <span class="b_player_name">Elephant</span> was killed by a team A <span class="a_player_name">Elephant:</span></th>
+	<th>On average, how many gang fights did a team A <span class="a_player_name">Hippo</span> have to participate in before a team A <span class="a_player_name">Hippo</span> was killed by a team B <span class="b_player_name">Tiger:</span></th>
+	<th>On average, how many gang fights did a team B <span class="a_player_name">Tiger</span> have to participate in before a team B <span class="b_player_name">Tiger</span> was killed by a team A <span class="a_player_name">Hippo:</span></th>
 </tr>
 <tr>
 	<td><span id="as_killed_per_b">0</span></td>
@@ -235,8 +235,8 @@ var a_name = "Hippo",
 	as_till_b_k = 0;
 	
 var dangerLevels = {
-	"a":999,
-	"b":999
+	"a":800,
+	"b":600
 };
 
 var start = null;
@@ -321,8 +321,8 @@ function calculateKill(){
 	bs_killed_p_el.innerHTML = b_percent_killed + "%";
 	
 	
-	bs_till_a_k = rounds_count / as_killed; // (rounds_count * b_team_count * a_team_count)
-	as_till_b_k = rounds_count / bs_killed; // (rounds_count * b_team_count * a_team_count)
+	bs_till_a_k = rounds_count / as_killed;
+	as_till_b_k = rounds_count / bs_killed;
 	
 	bs_till_a_k = Math.round(bs_till_a_k*1000)/1000;
 	as_till_b_k = Math.round(as_till_b_k*1000)/1000;
