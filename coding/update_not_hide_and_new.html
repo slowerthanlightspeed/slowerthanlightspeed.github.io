@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<p><button onclick="prevPage();">previous</button><button onclick="nextPage();">next</button></p>
+<div id="delegator" style="text-align:center;">
+  <h3></h3>
+  <p></p>
+  <p></p>
+  <p></p>
+  <p></p>
+  <p></p>
+  <p></p>
+  <p></p>
+  <p></p>
+  <p></p>
+  <p></p>
+</div>
+<script type="text/javascript">
+var pages = [ 
+  ["this", "is", "a", "story"], 
+  ["about", "a", "man", "named", "Jimbo"],
+  ["who had", "a", "very pretty", "sister", "by", "his", "side"]
+];
+
+var delegator = document.getElementById("delegator");
+
+var storyPs   = delegator.getElementsByTagName("P"),
+    storyH3   = delegator.getElementsByTagName("H3")[0],
+    page_num  = 0,
+    pageMax   = pages.length;
+
+function loadPage(){
+  storyH3.innerHTML = page_num+1;
+  for(var p_el_num in storyPs){
+    if(storyPs.hasOwnProperty(p_el_num)){
+      if(pages[page_num][p_el_num]){
+        storyPs[p_el_num].innerHTML = pages[page_num][p_el_num];
+        storyPs[p_el_num].style.display="block";
+      }
+      else{storyPs[p_el_num].style.display="none";}
+    }
+  }
+}
+loadPage();
+
+function nextPage(){
+  if(page_num+1<pageMax){
+    page_num++;
+    loadPage();
+  }
+}
+
+function prevPage(){
+  if(page_num){
+    page_num--;
+    loadPage();
+  }
+}
+
+function fadeIn(){
+  
+}
+
+function fadeOut(){
+  
+}
+</script>
+</body>
+</html>
