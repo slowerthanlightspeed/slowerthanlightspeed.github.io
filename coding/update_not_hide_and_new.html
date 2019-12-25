@@ -2,6 +2,27 @@
 <html lang="en-us">
 <head>
 <meta charset="utf-8">
+<style type="text/css">
+.square {
+      width: 100px;
+      height: 100px;
+      background: green;
+      padding-top:33px;
+    }
+.rectangle {
+      width: 200px;
+      height: 100px;
+      background: red;
+      padding-top:33px;
+    }
+.circle {
+      width: 100px;
+      height: 100px;
+      background: blue;
+      border-radius: 50%;
+        padding-top:33px;
+    }  
+</style>
 </head>
 <body>
 <p><button onclick="prevPage();">previous</button><button onclick="nextPage();">next</button></p>
@@ -24,6 +45,11 @@ var pages = [
   ["about", "a", "man", "named", "Jimbo"],
   ["who had", "a", "very pretty", "sister", "by", "his", "side"]
 ];
+var pageShapes = [
+  ["square", "circle", "circle", "square"], 
+  ["square", "circle", "circle", "square", "square"],
+  ["rectangle", "circle", "rectangle", "square", "circle", "circle", "square"]
+];
 
 var delegator = document.getElementById("delegator");
 
@@ -38,6 +64,7 @@ function loadPage(){
     if(storyPs.hasOwnProperty(p_el_num)){
       if(pages[page_num][p_el_num]){
         storyPs[p_el_num].innerHTML = pages[page_num][p_el_num];
+        storyPs[p_el_num].className = pageShapes[page_num][p_el_num];
         storyPs[p_el_num].style.display="block";
       }
       else{storyPs[p_el_num].style.display="none";}
@@ -48,25 +75,29 @@ loadPage();
 
 function nextPage(){
   if(page_num+1<pageMax){
+    fadeOut();
     page_num++;
     loadPage();
+    fadeIn();
   }
 }
 
 function prevPage(){
   if(page_num){
+    fadeOut();
     page_num--;
     loadPage();
+    fadeIn();
   }
 }
 
 function fadeIn(){
-  
+  // some fade magic
 }
 
 function fadeOut(){
-  
+  // other fade magic
 }
-</script>
+  </script>
 </body>
 </html>
