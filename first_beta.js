@@ -681,7 +681,7 @@ function checkAnswer(){
 		if(replacementTypeBools[replacementType](i)){
 			var handoff = setTimeout(function(){ clearStuff(); },20);
 			var handoff2 = setTimeout(function(){ wrongCount++; document.getElementById("wrongCount").innerHTML = wrongCount; },20);
-			replacementTypeElements[replacementType][0].focus();
+			if(!probablyMobile){replacementTypeElements[replacementType][0].focus();}
 			currentStreak = 0;
 			document.getElementById("currentStreak").innerHTML = currentStreak;
 			return "fail!";
@@ -698,7 +698,7 @@ function checkAnswer(){
 	bestTime = bestTime ? Math.min(bestTime, s) : s;
 	worstTime = worstTime ? Math.max(worstTime, s) : s;
 	hintRows.innerHTML = makeButtons();
-	replacementTypeElements[replacementType][0].focus();
+	if(!probablyMobile){replacementTypeElements[replacementType][0].focus();}
 	currentStreak++;
 	bestStreak = Math.max(currentStreak, bestStreak);
 	var handoff2 = setTimeout(function(){ 
