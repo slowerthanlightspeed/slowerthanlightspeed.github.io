@@ -225,11 +225,13 @@ function incrementTimer(){
 	document.getElementById("liveSeconds").innerHTML = correctedSeconds;
 }
 
-hintRows.innerHTML = makeButtons();
+
 var textInputs = document.getElementsByTagName("INPUT");
 var imageInputs = document.getElementsByTagName("IMG");
+hintRows.innerHTML = makeButtons();
 // if not mobile: (quick and dirty...just get screen width)
-textInputs[0].focus();
+// even quicker and dirtier... just comment out the focus:
+// textInputs[0].focus();
 
 hintRows.addEventListener("click",doStuff,false);
 // clearPartialAnswer.addEventListener("click",clearStuff,false);
