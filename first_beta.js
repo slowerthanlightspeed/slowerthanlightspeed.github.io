@@ -150,14 +150,16 @@ function makeButtons(){ // updates current puzzle at the same time
 	// BUILD INTERFACE HTML
 	var hintHTML, hintHTML0, hintHTML1;
 	if(replacementType !== "pic"){
-		if(replacementType === "letter"){
-			for(var thisInput in textInputs){
-				textInputs[thisInput].type="text";
+		if(probablyMobile){
+			if(replacementType === "letter"){
+				for(var thisInput in textInputs){
+					textInputs[thisInput].type="text";
+				}
 			}
-		}
-		else{
-			for(var thisInput in textInputs){
-				textInputs[thisInput].type="number";
+			else{
+				for(var thisInput in textInputs){
+					textInputs[thisInput].type="number";
+				}
 			}
 		}
 		
@@ -228,10 +230,54 @@ function incrementTimer(){
 
 var textInputs = document.getElementsByTagName("INPUT");
 var imageInputs = document.getElementsByTagName("IMG");
+
+function getViewportSize(w) {
+
+    // Use the specified window or the current window if no argument
+    w = w || window;
+    var widt, heigh;
+    
+    // This works for all browsers except IE8 and before
+    if (w.innerWidth != null) {
+	widt  = w.innerWidth;
+        heigh = w.innerHeight;
+	
+	if(widt < 700 || heigh < 400){
+		return true;
+	}
+	return false;
+    }
+	
+    // For IE (or any browser) in Standards mode
+    var d = w.document;
+    if (document.compatMode == "CSS1Compat"){
+	w.d = d.documentElement.clientWidth,
+	h.d = d.documentElement.clientHeight 
+	
+	if(widt < 700 || heigh < 400){
+		return true;
+	}
+	return false;
+    }
+    
+    // For browsers in Quirks mode
+    widt  = d.body.clientWidth; 
+    heigh = d.body.clientHeight;
+    
+    if(widt < 700 || heigh < 400){
+	return true;
+    }
+    return false;
+}
+
+var probablyMobile = getViewportSize();
+
 hintRows.innerHTML = makeButtons();
-// if not mobile: (quick and dirty...just get screen width)
-// even quicker and dirtier... just comment out the focus:
-// textInputs[0].focus();
+
+if(!probablyMobile){ // possibly autofocus if desktop... not super accessible though
+    // textInputs[0].focus();
+}
+
 
 hintRows.addEventListener("click",doStuff,false);
 // clearPartialAnswer.addEventListener("click",clearStuff,false);
