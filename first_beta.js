@@ -150,6 +150,17 @@ function makeButtons(){ // updates current puzzle at the same time
 	// BUILD INTERFACE HTML
 	var hintHTML, hintHTML0, hintHTML1;
 	if(replacementType !== "pic"){
+		if(replacementType === "letter"){
+			for(var thisInput in textInputs){
+				textInputs[thisInput].type="text";
+			}
+		}
+		else{
+			for(var thisInput in textInputs){
+				textInputs[thisInput].type="number";
+			}
+		}
+		
 		hintRows.style.width="275px;";
 			hintHTML0 = '<div class="hintWrapper clearfix">';
 			hintHTML0 += '<button class="onTheBoard">' + currentPuzzle[0][0] + '</button>';
@@ -217,6 +228,7 @@ function incrementTimer(){
 hintRows.innerHTML = makeButtons();
 var textInputs = document.getElementsByTagName("INPUT");
 var imageInputs = document.getElementsByTagName("IMG");
+// if not mobile: (quick and dirty...just get screen width)
 textInputs[0].focus();
 
 hintRows.addEventListener("click",doStuff,false);
