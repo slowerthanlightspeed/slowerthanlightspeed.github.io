@@ -339,17 +339,19 @@ function doOtherStuff(e){
 			}
 		}
 		
+		var dupe = false;
 		for(i=0, imax=textInputs.length; i<imax; i++){
 			if(textInputs[i] != thisInput && textInputs[i].value == thisInput.value){
 				thisInput.value="";
 				howManyFull--;
+				dupe = true;
 			}
 		}
 		
 		if(howManyFull === 3){
 			var handoff = setTimeout(function(){alert( checkAnswer() );},20);
 		}
-		else{
+		else if(!dupe){
 			if(thisInput.id === "tinput1"){document.getElementById("tinput2").focus();}
 			else if(thisInput.id === "tinput2"){document.getElementById("tinput3").focus();}
 			else{document.getElementById("tinput1").focus();}
