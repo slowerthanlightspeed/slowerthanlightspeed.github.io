@@ -326,6 +326,7 @@ function doStuff(e){
 }
 function doOtherStuff(e){
 	var thisInput = e.target;
+	var thisInputValue = thisInput.value;
 	var whichKey = e.which;
 	if(whichKey === 13){
 		var handoff = setTimeout(function(){alert( checkAnswer() );},20);
@@ -335,6 +336,13 @@ function doOtherStuff(e){
 		for(var i=0, imax=textInputs.length; i<imax; i++){
 			if(textInputs[i].value !== ""){
 				howManyFull++;
+			}
+		}
+		
+		for(i=0, imax=textInputs.length; i<imax; i++){
+			if(textInputs[i] != thisInput && textInputs[i].value == thisInput.value){
+				thisInput.value="";
+				howManyFull--;
 			}
 		}
 		
