@@ -1,0 +1,100 @@
+BioTreeContainer ::= {
+  fdict {
+    {
+      id 0,
+      name "label"
+    },
+    {
+      id 1,
+      name "dist"
+    }
+  },
+  nodes {
+    {
+      id 0,
+      features {
+        {
+          featureid 0,
+          value "NODE 001"
+        },
+        {
+          featureid 1,
+          value "0"
+        }
+      }
+    },
+    {
+      id 1,
+      parent 0,
+      features {
+        {
+          featureid 0,
+          value "state.COUNTRY1/junk"
+        },
+        {
+          featureid 1,
+          value "0.001"
+        }
+      }
+    },
+    {
+      id 2,
+      parent 0,
+      features {
+        {
+          featureid 0,
+          value "state.COUNTRY2/junk"
+        },
+        {
+          featureid 1,
+          value "0.001"
+        }
+      }
+    },
+    {
+      id 3,
+      parent 0,
+      features {
+        {
+          featureid 0,
+          value "NODE 002"
+        },
+        {
+          featureid 1,
+          value "0.001"
+        }
+      }
+    },
+    {
+      id 4,
+      parent 3,
+      features {
+        {
+          featureid 0,
+          value "state.COUNTRY3/junk"
+        },
+        {
+          featureid 1,
+          value "0.001"
+        }
+      }
+    }
+  },
+  user {
+    type str "Tree Metadata",
+    data {
+      {
+        label str "layout",
+        data int 0
+      },
+      {
+        label str "use-distances",
+        data bool TRUE
+      },
+      {
+        label str "rotate-labels",
+        data bool FALSE
+      }
+    }
+  }
+}
