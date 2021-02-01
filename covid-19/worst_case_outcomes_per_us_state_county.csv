@@ -1,4 +1,4 @@
-"stateName","REPLACE(countyName,"" Unallocated"","""")","populationSize","worstCaseTotal","worstCasePercent"
+"stateName","statewideOrCountyName","populationSize","worstCaseTotal","worstCasePercent"
 "Alabama","Statewide","4903185","69309","0.01413550"
 "Alabama","Autauga County","55869","742","0.01327830"
 "Alabama","Baldwin County","223234","3592","0.01608960"
