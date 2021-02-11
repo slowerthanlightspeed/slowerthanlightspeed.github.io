@@ -1,7 +1,6 @@
 /*THIS DOES NOT WORK AS I WOULD EXPECT*/
 SELECT 
     MIN(p_k),
-    iso_3166,
 
     CASE 
     WHEN x < 1 && x >= 0.5 THEN 0.5
@@ -14,13 +13,13 @@ SELECT
     WHEN x < 8 && x >= 7 THEN 7
     WHEN x < 9 && x >= 8 THEN 8
     WHEN x < 10 && x >= 9 THEN 9
-	WHEN x < 11 && x >= 10 THEN 10
+    WHEN x < 11 && x >= 10 THEN 10
     ELSE NULL END
     AS theBaffler
 
 FROM `owid_no_zeroes_deduped_for_reddit`
-
-GROUP BY iso_3166, theBaffler
+WHERE iso_3166 = 4
+GROUP BY theBaffler
 /* OUTPUT UNEXPECTEDLY MISSES 0.5 VALUES*/
 
 
@@ -30,7 +29,6 @@ GROUP BY iso_3166, theBaffler
 /*THIS WORKS AS EXPECTED*/
 SELECT 
     MIN(p_k),
-    iso_3166,
 
     CASE 
     WHEN x < 1 && x >= 0.5 THEN 0.5
@@ -47,6 +45,6 @@ SELECT
     AS theBaffler
 
 FROM `owid_no_zeroes_deduped_for_reddit`
-
-GROUP BY iso_3166, theBaffler
+WHERE iso_3166 = 4
+GROUP BY theBaffler
 /* OUTPUT IS AS EXPECTED*/
