@@ -1,0 +1,52 @@
+/*THIS DOES NOT WORK AS I WOULD EXPECT*/
+SELECT 
+    MIN(p_k),
+    iso_3166,
+
+    CASE 
+    WHEN x < 1 && x >= 0.5 THEN 0.5
+    WHEN x < 2 && x >= 1 THEN 1
+    WHEN x < 3 && x >= 2 THEN 2
+    WHEN x < 4 && x >= 3 THEN 3
+    WHEN x < 5 && x >= 4 THEN 4
+    WHEN x < 6 && x >= 5 THEN 5
+    WHEN x < 7 && x >= 6 THEN 6
+    WHEN x < 8 && x >= 7 THEN 7
+    WHEN x < 9 && x >= 8 THEN 8
+    WHEN x < 10 && x >= 9 THEN 9
+	WHEN x < 11 && x >= 10 THEN 10
+    ELSE NULL END
+    AS theBaffler
+
+FROM `owid_no_zeroes_deduped_for_reddit`
+
+GROUP BY iso_3166, theBaffler
+/* OUTPUT UNEXPECTEDLY MISSES 0.5 VALUES*/
+
+
+
+
+
+/*THIS WORKS AS EXPECTED*/
+SELECT 
+    MIN(p_k),
+    iso_3166,
+
+    CASE 
+    WHEN x < 1 && x >= 0.5 THEN 0.5
+    WHEN x < 2 && x >= 1 THEN 1
+    WHEN x < 3 && x >= 2 THEN 2
+    WHEN x < 4 && x >= 3 THEN 3
+    WHEN x < 5 && x >= 4 THEN 4
+    WHEN x < 6 && x >= 5 THEN 5
+    WHEN x < 7 && x >= 6 THEN 6
+    WHEN x < 8 && x >= 7 THEN 7
+    WHEN x < 9 && x >= 8 THEN 8
+    WHEN x < 10 && x >= 9 THEN 9
+    ELSE NULL END
+    AS theBaffler
+
+FROM `owid_no_zeroes_deduped_for_reddit`
+
+GROUP BY iso_3166, theBaffler
+/* OUTPUT IS AS EXPECTED*/
