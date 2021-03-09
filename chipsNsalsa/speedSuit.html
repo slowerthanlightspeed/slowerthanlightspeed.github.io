@@ -1,1 +1,243 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<title>Speed Sort Cards</title>
+
+<link type="text/css" rel="stylesheet" href="box_reset_normalize_clearfix.css">
+
+<style>
+body{background-color:black;}
+
+.card{
+	float:left; 
+	height:148px; 
+	width:106px; 
+	background:url('English_pattern_playing_cards_deck_sprite_pattern.png');
+}
+.suitCard{
+	float:left; 
+	height:148px; 
+	width:106px; 
+	background:url('suitOnly.png');
+}
+
+.ace{	background-position-x:-10px;}
+.two{	background-position-x:-126px;}
+.three{	background-position-x:-242px;}
+.four{	background-position-x:-358px;}
+.five{	background-position-x:-474px;}
+.six{	background-position-x:-590px;}
+.seven{	background-position-x:-706px;}
+.eight{	background-position-x:-822px;}
+.nine{	background-position-x:-938px;}
+.ten{	background-position-x:-1054px;}
+.jack{	background-position-x:-1170px;}
+.queen{	background-position-x:-1286px;}
+.king{	background-position-x:-1402px;}
+.spade{	background-position-y:-10px;}
+.heart{	background-position-y:-168px}
+.diamond{background-position-y:-326px;}
+.club{	background-position-y:-484px;}
+
+#activeCards{text-align:center; width:100%;}
+	#activeCards div{margin-left:auto; margin-right:auto; width:106px; overflow:auto; float:none;}
+	#activeCards div div{width:106px;}
+	
+#targets{text-align:center; width:100%; background-color:red;}
+	#targets div{margin-left:auto; margin-right:auto; width:488px; overflow:auto;}
+	#targets div div{width:106px; margin:8px;}
+	
+#timeAndScore{background-color:white;}
+</style>
+
+</head>
+<body>
+<div id="activeCards" class="clearfix">
+	<div class="clearfix">
+		<div class=""></div>
+	</div>
+</div>
+
+<div id="targets">
+	<div class="clearfix">
+		<div class="suitCard ace club"></div>
+		<div class="suitCard ace heart"></div>
+		<div class="suitCard ace diamond"></div>
+		<div class="suitCard ace spade"></div>
+	</div>
+</div>
+
+<div><button id="startButton">Start Round</button></div>
+<div><p id="timeAndScore"></p></div>
+
+<script>
+
+let targets 		= document.getElementById("targets").getElementsByTagName("DIV")[0].getElementsByTagName("DIV");
+let clubTarget 		= targets[0];
+let heartTarget 	= targets[1];
+let diamondTarget 	= targets[2];
+let spadeTarget 	= targets[3];
+let timeAndScore 	= document.getElementById("timeAndScore");
+let startButton 		= document.getElementById("startButton");
+let activeCard 		= document.getElementById("activeCards").getElementsByTagName("DIV")[0].getElementsByTagName("DIV")[0];
+
+startButton.addEventListener("click",startRound,false);
+
+let vals 	= ["ace","two","three","four","five","six","seven","eight","nine","ten","jack","queen","king"];
+let val;
+
+let suits 	= ["club","heart","diamond","spade"];
+
+let deck 	= [];
+let shuffledDeck = [];
+let pointer = 0;
+
+let initTime;
+
+
+for(let suit in suits){
+	for(val in vals){
+		deck.push(vals[val] + " " + suits[suit]);
+	}
+}
+
+function shuffle(){
+	let workingDeck 	= JSON.parse(JSON.stringify(deck));
+	let shuffledDeck 	= [];
+	let pointer 		= 0;
+	let imax 			= 52;
+
+	while(imax>0){
+		
+		imax--;
+		
+		pointer = Math.round( Math.random()*(imax-1) );
+		
+		shuffledDeck.push(workingDeck.splice(pointer,1)[0]);
+	}
+	
+	return shuffledDeck;
+}
+
+clubTarget.addEventListener(	'click', clubClick, 	false);
+heartTarget.addEventListener(	'click', heartClick, 	false);
+diamondTarget.addEventListener(	'click', diamondClick, 	false);
+spadeTarget.addEventListener(	'click', spadeClick, 	false);
+
+let score = 0;
+let stifle = 0;
+
+function startRound(){
+	shuffledDeck = shuffle();
+	pointer = 0;
+	score = 0;
+	activeCard.className = "card " + shuffledDeck[pointer];
+	initTime = performance.now();
+}
+
+function endRound(){
+
+	let noDub = setTimeout(function(){stifle = 0;}, 333);
+	let diff = performance.now()-initTime;
+	timeAndScore.innerHTML += "Score = " + score + " in " + Math.round(diff/1000) + " seconds<br>";
+	activeCard.className = "";
+	
+	clubTarget.className = "suitCard ace club";
+	heartTarget.className = "suitCard ace heart";
+	diamondTarget.className = "suitCard ace diamond";
+	spadeTarget.className = "suitCard ace spade";
+	
+}
+
+function clubClick(){
+	if(stifle === 1){return false;}
+	
+	// if active card is club, +1; else -1
+	if(activeCard.className.indexOf('club')!==-1){
+		clubTarget.className = activeCard.className;
+		score++;
+	}
+	else{score--;}
+	
+	stifle = 1;
+	
+	pointer++;
+	
+	if(pointer === 52){
+		endRound();
+		return false;
+	}
+	let noDub = setTimeout(function(){stifle = 0;}, 333);
+	
+	activeCard.className = "card " + shuffledDeck[pointer];
+}
+function heartClick(){
+	if(stifle === 1){return false;}
+	// if active card is heart, +1; else -1
+	if(activeCard.className.indexOf('heart')!==-1){
+		heartTarget.className = activeCard.className;
+		score++;
+	}
+	else{score--;}
+	
+	stifle = 1;
+	
+	pointer++;
+	
+	if(pointer === 52){
+		endRound();
+		return false;
+	}
+	let noDub = setTimeout(function(){stifle = 0;}, 333);
+	
+	activeCard.className = "card " + shuffledDeck[pointer];
+}
+function diamondClick(){
+	if(stifle === 1){return false;}
+	// if active card is diamond, +1; else -1
+	if(activeCard.className.indexOf('diamond')!==-1){
+		diamondTarget.className = activeCard.className;
+		score++;
+	}
+	else{score--;}
+	
+	stifle = 1;
+	
+	pointer++;
+	
+	if(pointer === 52){
+		endRound();
+		return false;
+	}
+	let noDub = setTimeout(function(){stifle = 0;}, 333);
+	
+	activeCard.className = "card " + shuffledDeck[pointer];
+}
+function spadeClick(){
+	if(stifle === 1){return false;}
+	// if active card is spade, +1; else -1
+	if(activeCard.className.indexOf('spade')!==-1){
+		spadeTarget.className = activeCard.className;
+		score++;
+	}
+	else{score--;}
+	
+	stifle = 1;
+	
+	pointer++;
+	
+	if(pointer === 52){
+		endRound();
+		return false;
+	}
+	
+	let noDub = setTimeout(function(){stifle = 0;}, 333);
+	
+	activeCard.className = "card " + shuffledDeck[pointer];
+}
+</script>
+</body>
+</html>
